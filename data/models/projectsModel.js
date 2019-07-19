@@ -19,7 +19,7 @@ async function findById(id) {
     .where("projects.id", id);
 
   const result = {
-    ...project,
+    ...project[0],
     completed: project.completed === 1 ? true : false
   };
 
