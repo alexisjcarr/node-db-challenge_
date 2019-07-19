@@ -10,15 +10,15 @@ async function find() {
   return await db("actions");
 }
 
-async function findById(project_id) {
+async function findById(id) {
   return (
     (await db("actions")
-      .where({ project_id })
+      .where({ id })
       .first()) || null
   );
 }
 
-async function add(project) {
-  const id = await db("actions").insert(project, "id");
+async function add(action) {
+  const id = await db("actions").insert(action, "id");
   return findById(...id);
 }
