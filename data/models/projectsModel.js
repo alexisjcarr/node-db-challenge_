@@ -11,14 +11,29 @@ async function find() {
 }
 
 async function findById(id) {
-  return (
-    (await db("projects")
-      .where({ id })
-      .first()) || null
-  );
+  // SELECT * FROM actions AS a INNER JOIN projects AS p ON a.project_id = p.id
+  const project = await db("projects").where({ id });
+  const project_actions = await db("actions")
+    .join("projects", "actions.project_id", "projects.id")
+    .select("*")
+    .where("projects.id", id);
+
+  const result = {
+    ...project,
+    completed: project.completed === 1 ? true : false
+  };
+
+  result.actions = project_actions.map(action => ({
+    ...action,
+    completed: action.completed === 1 ? true : false
+  }));
+
+  return result;
 }
 
 async function add(project) {
-  const id = await db("projects").insert(project, "id");
+  const id = await db("projects")
+    .insert(project, "id")
+    .returning("*");
   return findById(...id);
 }

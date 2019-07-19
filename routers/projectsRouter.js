@@ -12,6 +12,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const project = await db.findById(id);
+    res.status(200).json(project);
+  } catch (err) {
+    res.status(500).json(err.message);
+  }
+});
+
 router.post("/", validateProject, async (req, res) => {
   try {
     const project = await db.add(req.body);
