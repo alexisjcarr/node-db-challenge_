@@ -1,4 +1,4 @@
-const db = require("../dataConfig");
+const db = require("../dbConfig");
 
 module.exports = {
   add,
