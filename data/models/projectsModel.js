@@ -10,10 +10,10 @@ async function find() {
   return await db("projects");
 }
 
-async function findById(project_id) {
+async function findById(id) {
   return (
     (await db("projects")
-      .where({ project_id })
+      .where({ id })
       .first()) || null
   );
 }
