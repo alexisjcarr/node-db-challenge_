@@ -20,7 +20,6 @@ async function findById(id) {
   );
 }
 
-// no
 async function add(action) {
   const id = await db("actions")
     .insert(action, "id")
